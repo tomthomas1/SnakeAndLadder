@@ -5,11 +5,32 @@ public class SnakeAndLadder {
 		System.out.println(" Welcome to the Snake And Ladder Game");
 
 		int player_pos = 0;
-		System.out.println("Player position is: " + player_pos);
+		final int ladder = 1;
+		final int snake = 2;
+
+		System.out.println("Player starting position is: " + player_pos);
 
 		int dice = (int) Math.floor((Math.random() * 7));
-		System.out.println("Position after dice rolled is : " + dice);
+		System.out.println("Dice Value is : " + dice);
 
+		int option = (int) Math.floor((Math.random() * 3));
+
+		switch (option) {
+
+		case ladder:
+			System.out.println(" Current position has ladder");
+			player_pos += dice;
+			break;
+		case snake:
+			System.out.println(" Current position had snake");
+			if(player_pos < 0) {
+			player_pos -= dice;
+			}
+			break;
+		default:
+			System.out.println(" No play.");
+		}
+		System.out.println(" Current position is: " + player_pos);
 	}
 
 }
