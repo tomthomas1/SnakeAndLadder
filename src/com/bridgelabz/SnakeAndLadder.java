@@ -2,51 +2,82 @@ package com.bridgelabz;
 
 public class SnakeAndLadder {
 	public static void main(String[] args) {
-		System.out.println(" Welcome to the Snake And Ladder Game");
+		int position1 = 0;
+		int position2 = 0;
+		System.out.println(" Welcome to the Snake And Ladder Game ");
 
-		int player_pos = 0;
-		final int ladder = 1;
-		final int snake = 2;
+		int dice;
 		int option;
-		int totalmoves=0;
-          //initalize the starting position.
-		System.out.println("Player starting position is: " + player_pos);
+		int roll = 0;
+		int turn = 0;
+		int oldTurn = 0;
+     // to iterate till any player reaches pos 100 
+		while (position1 < 100 && position2 < 100) {
 
-		while (player_pos < 100) {
-			int dice = (int) Math.floor((Math.random() * 7));   // random function for dice
-			System.out.println("Dice Value is : " + dice);
+			if (turn == 0)   //Player 1 plays
+				System.out.println(" Player 1 is playing");
+			else   // Player 2 plays 
+				System.out.println(" Player 2 is playing");
 
-			option = (int) Math.floor((Math.random() * 3)); // random function for moves
+			dice = (int) Math.floor((Math.random() * 10) % 6 + 1);   // to generate random num for dice
+			System.out.println(" The dice was rolled to: " + dice);
+			option = (int) Math.floor(Math.random() * 3);   //to generate random num for ladder or snake 
 
 			switch (option) {
-                // if random function is 1 then it is ladder and will increment the position.
-			case ladder:
-				System.out.println(" Current position has ladder H");
-				System.out.println("                             H");
-				player_pos = player_pos + dice;
-				//if the position is greater that 100 then it will not take any move.
-				if (player_pos > 100) {
-					player_pos = player_pos - dice;
-					System.out.println(" NOT VALID. Please continue to play as current position greater that 100.");
-				}
-				totalmoves++;
-				break;
-			case snake:
-				// if random function is 2 then it is snake and will decrement the position.
-				System.out.println(" Current position had snake ~~~~~~~~>>");
-				player_pos = player_pos - dice;
-				player_pos = player_pos < 0 ? 0 : player_pos;
-				totalmoves++;
-				break;
-			default:
-				// else there will be no moves and will be in the current position.
+			case 0:
 				System.out.println(" No play.");
-				totalmoves++;
+				break;
+			case 1:
+				System.out.println(" Current position has ladder IIIIIII");
+				if (turn == 0)
+					position1 += dice;
+
+				else
+					position2 += dice;
+
+				if (position1 > 100) {
+					position1 -= dice;
+					System.out.println(" Player1 exceeded 100 so not counting");
+				}
+
+				if (position2 > 100) {
+					position2 -= dice;
+					System.out.println(" Player2 exceeded 100 so not counting");
+				}
+				break;
+			case 2:
+				System.out.println(" Current position had snake ~~~~~~~~>>");
+				if (turn == 0)
+					position1 -= dice;
+
+				else
+					position2 -= dice;
+
+				if (position1 < 0) {
+					position1 = 0;
+					System.out.println(" Player1 reset to 0");
+				}
+
+				if (position2 < 0) {
+					position2 = 0;
+					System.out.println(" Player2 reset to 0");
+				}
+				break;
 			}
-			System.out.println(" Current position is: " + player_pos);
+
+			turn = (turn + 1) % 2;    // to change the players
+
+			if (oldTurn == 0) {
+				System.out.println(" Current position for Player1: " + position1 + "\n");
+			} else {
+				System.out.println(" Current position for Player2: " + position2 + "\n");
+			}
+			roll++;
+			oldTurn = turn;
 		}
-		System.out.println("Total moves taken to win the game is : " + totalmoves);
-		System.out.println(" Congratulations. You have won the game..");
+
+		System.out.println(" Congratulations Player" + (turn + 1));
+		System.out.println("  You won the game in " + roll + " rolls");
 	}
 
 }
